@@ -1,26 +1,41 @@
 package main;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 public class Individual<T extends Integer> extends LinkedList<Integer> implements Comparable<Individual<Integer>> {
 
 	private static final long serialVersionUID = 1L;
-
-	private double individualWeight;
+	public int weight = 0;
+	private int fitness;
+	private int penalty;
 	
-	public double getIndividualWeight()
-	{
-		return individualWeight;
+	public void calculateFitness(List<Item> items) {
+		fitness = 0;
+		for (int i = 0; i < this.size(); i++)
+		{
+			fitness += this.get(i) * items.get(i).getSurvivalpoints();
+		}
 	}
-
-	public void setIndividualWeight(double individualWeight)
-	{
-		this.individualWeight = individualWeight;
-	}
+	
+//	public void calculatePenalty(List<Item> items) {
+//		fitness = 0;
+//		for (int i = 0; i < this.size(); i++)
+//		{
+//			fitness += sum(w) * abs(sum(x * w) - W);
+//		}
+//	}
 
 	public int getFitness()
 	{
-		return 0;
+		return fitness;
+	}
+	
+
+	public int getPenalty()
+	{
+		return penalty;
 	}
 
 	public int compareTo(Individual<Integer> int1)

@@ -7,17 +7,11 @@ import java.util.Random;
 
 public class Operations {
 
-	private Random random = new Random();
-	private List<Item> items;
-	private double weightLimitation;
+	private static Random random = new Random();
+	private static List<Item> items;
+	private static double weightLimitation;
 
-	public Operations(List<Item> items, double limit)
-	{
-		this.items = items;
-		this.weightLimitation = limit;
-	}
-
-	public void bitFlipMutation(Individual<Integer> ind, double prob)
+	public static void bitFlipMutation(Individual<Integer> ind, double prob)
 	{
 		for (int i = 0; i < ind.size(); i++)
 		{
@@ -28,7 +22,7 @@ public class Operations {
 		}
 	}
 
-	public void shuffleMutation(Individual<Integer> ind, double prob)
+	public static void shuffleMutation(Individual<Integer> ind, double prob)
 	{
 		for (int i = 0; i < random.nextInt(ind.size()); i++)
 		{
@@ -43,7 +37,7 @@ public class Operations {
 		}
 	}
 
-	public void onePointCrossover(Individual<Integer> ind1, Individual<Integer> ind2)
+	public static void onePointCrossover(Individual<Integer> ind1, Individual<Integer> ind2)
 	{
 		int splitPoint = random.nextInt(ind1.size());
 		for (int i = splitPoint; i < ind1.size(); i++)
@@ -54,7 +48,7 @@ public class Operations {
 		}
 	}
 
-	public void towPointCrossover(Individual<Integer> ind1, Individual<Integer> ind2)
+	public static void towPointCrossover(Individual<Integer> ind1, Individual<Integer> ind2)
 	{
 		int startPoint = random.nextInt(ind1.size());
 		int endPoint = startPoint + random.nextInt(ind1.size() - startPoint);
@@ -66,7 +60,7 @@ public class Operations {
 		}
 	}
 
-	public List<Individual<Integer>> selectBest(List<Individual<Integer>> population, int len)
+	public static List<Individual<Integer>> selectBest(List<Individual<Integer>> population, int len)
 	{
 		List<Individual<Integer>> best = new LinkedList<Individual<Integer>>();
 		Collections.sort(population);
@@ -77,29 +71,60 @@ public class Operations {
 		return best;
 	}
 
-	public Individual<Integer> selectParent(List<Individual<Integer>> population)
+	public static Individual<Integer> createRandomIndividual(int length)
+	{
+		Individual<Integer> ind = new Individual<Integer>();
+		ind.clear();
+		for (int i = 0; i < length; i++)
+		{
+			int v = random.nextInt(2);
+			if (v > 0) {
+				ind.weight += items.get(i).getWeight();
+				if (ind.weight < weightLimitation) {
+					ind.add(v);
+				} else {
+					ind.weight -= items.get(i).getWeight();
+					ind.add(0);
+				}
+			} else {
+				ind.add(v);
+			}
+		}
+		return ind;
+	}
+	
+	public static void calculateIndividualFitness(Individual<Integer> ind) {
+		ind.calculateFitness(items);
+	}
+
+	public static Individual<Integer> selectParent(List<Individual<Integer>> population)
 	{
 		return population.get(random.nextInt(population.size()));
 	}
 
-	public Individual<Integer> randomCreate(int len)
-	{
-		Individual<Integer> ind = new Individual<Integer>();
-		ind.clear();
-		for (int i = 0; i < len; i++)
-		{
-			int x = random.nextInt(2);
-			if (x == 1)
-			{
-
-			}
-			ind.add(x);
-		}
-		return ind;
-	}
-
-	public void printIndividual(Individual<Integer> ind)
+	public static void printIndividual(Individual<Integer> ind)
 	{
 		System.out.println(" ");
 	}
+
+	public static List<Item> getItems()
+	{
+		return items;
+	}
+
+	public static void setItems(List<Item> items)
+	{
+		Operations.items = items;
+	}
+
+	public static double getWeightLimitation()
+	{
+		return weightLimitation;
+	}
+
+	public static void setWeightLimitation(double weightLimitation)
+	{
+		Operations.weightLimitation = weightLimitation;
+	}
+
 }

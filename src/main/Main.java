@@ -1,5 +1,7 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,28 +19,18 @@ public class Main {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException
 	{
-
-		List<Item> items = new ArrayList<Item>();
-		double limit = 5.67;
-		
-		// Read the items
-		for (int i = 0; i < INDIVIDUAL_SIZE; i++)
-		{
-
-		}
-
-		Operations operations = new Operations(items, limit);
-		List<Individual<Integer>> population = new ArrayList<Individual<Integer>>();
+		readInputData();
 
 		// System.out.println("######### Create Random Population ##########");
+		List<Individual<Integer>> population = new ArrayList<Individual<Integer>>();
 		for (int i = 0; i < POPSIZE; i++)
 		{
-			Individual<Integer> individual = operations.randomCreate(INDIVIDUAL_SIZE);
-
+			Individual<Integer> individual = Operations.createRandomIndividual(INDIVIDUAL_SIZE);
+			Operations.calculateIndividualFitness(individual);
 			population.add(individual);
 		}
 
-		population = operations.selectBest(population, POPSIZE);
+		population = Operations.selectBest(population, POPSIZE);
 		Individual<Integer> bestInd = population.get(0);
 
 		System.out.println("########### Start The Algorthem #########");
@@ -47,8 +39,8 @@ public class Main {
 			List<Individual<Integer>> children = new ArrayList<Individual<Integer>>();
 			for (int j = 0; j < PARENTS; j++)
 			{
-				Individual<Integer> parent1 = operations.selectParent(population);
-				Individual<Integer> parent2 = operations.selectParent(population);
+				Individual<Integer> parent1 = Operations.selectParent(population);
+				Individual<Integer> parent2 = Operations.selectParent(population);
 
 				Individual<Integer> child1 = (Individual<Integer>) parent1.clone();
 				Individual<Integer> child2 = (Individual<Integer>) parent2.clone();
@@ -57,9 +49,9 @@ public class Main {
 				// Operations.bitFlipMutation(child1, MUTATION_RATE);
 				// Operations.bitFlipMutation(child2, MUTATION_RATE);
 
-				operations.towPointCrossover(child1, child2);
-				operations.shuffleMutation(child1, MUTATION_RATE);
-				operations.shuffleMutation(child2, MUTATION_RATE);
+				Operations.towPointCrossover(child1, child2);
+				Operations.shuffleMutation(child1, MUTATION_RATE);
+				Operations.shuffleMutation(child2, MUTATION_RATE);
 
 				// child1.setPenalty(gOpertions.calculateIndividualPanelty(child1));
 				// child1.setMonitors(gOpertions.calculateIndividualMonitors(child1));
@@ -74,14 +66,40 @@ public class Main {
 			}
 
 			population.addAll(children);
-			population = operations.selectBest(population, POPSIZE);
+			population = Operations.selectBest(population, POPSIZE);
 			bestInd = population.get(0);
 
 			System.out.println("###### The Bist Individual for Generation " + i + " ######");
-			operations.printIndividual(bestInd);
+			Operations.printIndividual(bestInd);
 
 		}
 
+	}
+
+	private static void readInputData() throws IOException
+	{
+		BufferedReader reader = new BufferedReader(new FileReader("resources\\input.txt"));
+		List<Item> items = new ArrayList<Item>();
+		String line = reader.readLine();
+		String[] parts = line.split("\t");
+		Item item;
+
+		// Read the items
+		for (int i = 0; i < INDIVIDUAL_SIZE * 2; i += 2)
+		{
+			item = new Item();
+			item.setWeight(Double.parseDouble(parts[i]));
+			// System.out.println("Weight = " + Double.parseDouble(parts[i]));
+			item.setSurvivalpoints(Double.parseDouble(parts[i + 1]));
+			// System.out.println("Survivalpoints = " + Double.parseDouble(parts[i+1]));
+			items.add(item);
+		}
+
+		line = reader.readLine();
+		// System.out.println("WeightLimitation = " + line);
+		Operations.setItems(items);
+		Operations.setWeightLimitation(Double.parseDouble(line));
+		reader.close();
 	}
 
 }
