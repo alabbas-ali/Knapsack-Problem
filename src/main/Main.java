@@ -11,9 +11,9 @@ public class Main {
 	static final int INDIVIDUAL_SIZE = 10;
 	static final int POPSIZE = 50;
 	static final int NR_OF_ITERATIONS = 100;
-
 	static final int PARENTS = 10;
-	static final double MUTATION_RATE = 0.05;
+	
+	static final double MUTATION_RATE = 0.1;
 	static final int ROUND_PARENT_NUM = 2;
 
 	@SuppressWarnings("unchecked")
@@ -26,7 +26,6 @@ public class Main {
 		for (int i = 0; i < POPSIZE; i++)
 		{
 			Individual<Integer> individual = Operations.createRandomIndividual(INDIVIDUAL_SIZE);
-			Operations.calculateIndividualFitness(individual);
 			population.add(individual);
 		}
 
@@ -45,22 +44,14 @@ public class Main {
 				Individual<Integer> child1 = (Individual<Integer>) parent1.clone();
 				Individual<Integer> child2 = (Individual<Integer>) parent2.clone();
 
-				// Operations.onePointCrossover(child1, child2);
-				// Operations.bitFlipMutation(child1, MUTATION_RATE);
-				// Operations.bitFlipMutation(child2, MUTATION_RATE);
+				Operations.onePointCrossover(child1, child2);
+				Operations.bitFlipMutation(child1, MUTATION_RATE);
+				Operations.bitFlipMutation(child2, MUTATION_RATE);
 
-				Operations.towPointCrossover(child1, child2);
-				Operations.shuffleMutation(child1, MUTATION_RATE);
-				Operations.shuffleMutation(child2, MUTATION_RATE);
+				//Operations.towPointCrossover(child1, child2);
+				//Operations.shuffleMutation(child1, MUTATION_RATE);
+				//Operations.shuffleMutation(child2, MUTATION_RATE);
 
-				// child1.setPenalty(gOpertions.calculateIndividualPanelty(child1));
-				// child1.setMonitors(gOpertions.calculateIndividualMonitors(child1));
-				// child2.setPenalty(gOpertions.calculateIndividualPanelty(child2));
-				// child2.setMonitors(gOpertions.calculateIndividualMonitors(child2));
-				// Operations.printIndividual(" -- Adding Child Individual ", child1,
-				// gOpertions.getEdgeCount());
-				// Operations.printIndividual(" -- Adding Child Individual ", child2,
-				// gOpertions.getEdgeCount());
 				children.add(child1);
 				children.add(child2);
 			}
@@ -71,7 +62,6 @@ public class Main {
 
 			System.out.println("###### The Bist Individual for Generation " + i + " ######");
 			Operations.printIndividual(bestInd);
-
 		}
 
 	}
