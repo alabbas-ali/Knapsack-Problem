@@ -69,7 +69,7 @@ public class Main {
 	private static void readInputData() throws IOException
 	{
 		BufferedReader reader = new BufferedReader(new FileReader("resources\\input.txt"));
-		List<Item> items = new ArrayList<Item>();
+		List<Item> items = new ArrayList<>();
 		String line = reader.readLine();
 		String[] parts = line.split("\t");
 		Item item;
