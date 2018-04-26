@@ -17,7 +17,6 @@ public class GoldbachsConjecture {
 				int[][] multi = new int[999][2];
 				int end, start = 3, counter = 0;
 				while (start <= (end = x - start)) {
-
 					if (checkPrime(start) && checkPrime(end)) {
 						multi[counter][0] = start;
 						multi[counter][1] = end;

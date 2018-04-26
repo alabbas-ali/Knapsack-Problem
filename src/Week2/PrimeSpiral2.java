@@ -41,54 +41,58 @@ public class PrimeSpiral2 {
 			(end = sc.nextInt()) >= 1 && 
 			n++ <= 50
 		) {
-			
 			boolean found = false;
 			boolean[] isVisited = new boolean[10000];
 			int[] step = new int[10000];
 			LinkedList<Integer> queue = new LinkedList<>();
 			queue.addLast(start);
 			isVisited[start] = true;
-			int num = 0;
 			while (
 				!queue.isEmpty()
 			) {
+				
 				int current = queue.pop();
-				num ++;
+				
 				if (current == end) {
 					found = true;
 					break;
 				}
+				
 				for (int j = 0; j <= 9; j++) {
 					int next1 = getNext(1, j, current);
 					int next2 = getNext(2, j, current);
 					int next3 = getNext(3, j, current);
 					int next4 = getNext(4, j, current);
 					
-					if (!isVisited[next1] && !isPrime[next1] && next1 <= 10000) {
+					if (!isVisited[next1]) {
 						queue.addLast(next1);
 						step[next1] = step[current] + 1;
 						isVisited[next1] = true;
 					}
-					if (!isVisited[next2] && !isPrime[next2] && next1 <= 10000) {
+					
+					if (!isVisited[next2]) {
 						queue.addLast(next2);
 						step[next2] = step[current] + 1;
 						isVisited[next2] = true;
 					}
-					if (!isVisited[next3] && !isPrime[next3] && next1 <= 10000) {
+					
+					if (!isVisited[next3]) {
 						queue.addLast(next3);
 						step[next3] = step[current] + 1;
 						isVisited[next3] = true;
 					}
-					if (!isVisited[next4] && !isPrime[next4] && next1 <= 10000) {
+					
+					if (!isVisited[next4]) {
 						queue.addLast(next4);
 						step[next4] = step[current] + 1;
 						isVisited[next4] = true;
 					}
+					
 				}
 			}
 			
 			if(found) {
-				System.out.println("Case " + n + ": " + num);
+				System.out.println("Case " + n + ": " + step[end]);
 			} else {
 				System.out.println("Case " + n + ": impossible");
 			}
@@ -116,6 +120,9 @@ public class PrimeSpiral2 {
 		if (flag == 4) {
 			next = current / 10 * 10 + i;
 
+		}
+		if(isPrime[next]) {
+			return current;
 		}
 		return next;
 	}

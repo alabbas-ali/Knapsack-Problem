@@ -10,22 +10,61 @@ public class PrimeSpiral {
 	
 	static int X , Y;
 	
-	public static void gitCoordinate(int N) {
+	public static int[] gitCoordinate(int N) {
 		int d = (int) Math.floor(1 / 2 + Math.sqrt(N / 4 - 1 / 4));
 		int Nrem = N - (4 * d ^ 2 - 4 * d + 2);
-		if (Nrem <= (2d - 1)) {
-			X = d;
-			Y = -d + 1 + Nrem;
-		} else if ((2d - 1) <= Nrem && Nrem <= (4d - 1)) {
-			X = 3 * d - 1 - Nrem; // d-(Nrem-(2d-1)) 
-			Y = d;
-		} else if (4d - 1 <= Nrem && Nrem <= 6d - 1) {
-			X = -d;
-			Y = 5 * d - 1 - Nrem; // d-(Nrem-(4d-1)) 
-		} else if (6d - 1 <= Nrem) {
-			X = -7 * d + 1 + Nrem; // -d+(Nrem-(6d-1))
-			Y = -d;
+		int[] pos= {0,0};
+		if (Nrem <= (2 * d - 1)) {
+			pos[0] = d;
+			pos[0] = -d + 1 + Nrem;
+		} else if ((2 * d - 1) <= Nrem && Nrem <= (4 * d - 1)) {
+			pos[0] = 3 * d - 1 - Nrem; // d-(Nrem-(2d-1))
+			pos[0] = d;
+		} else if (4 * d - 1 <= Nrem && Nrem <= 6 * d - 1) {
+			pos[0] = -d;
+			pos[0] = 5 * d - 1 - Nrem; // d-(Nrem-(4d-1))
+		} else if (6 * d - 1 <= Nrem) {
+			pos[0] = -7 * d + 1 + Nrem; // -d+(Nrem-(6d-1))
+			pos[0] = -d;
 		}
+		return pos;
+	}
+	
+	public static int[] spiralCoordinate(int n) {
+	    // given n an index in the squared spiral
+	    // p the sum of point in inner square
+	    // a the position on the current square
+	    // n = p + a
+	    int r = (int) (Math.floor((Math.sqrt(n + 1) - 1) / 2) + 1);
+	    // compute radius : inverse arithmetic sum of 8+16+24+...=
+	    int p = (8 * r * (r - 1)) / 2;
+	    // compute total point on radius -1 : arithmetic sum of 8+16+24+...
+	    int en = r * 2;
+	    // points by face
+	    int a = (1 + n - p) % (r * 8);
+	    // compute de position and shift it so the first is (-r,-r) but (-r+1,-r)
+	    // so square can connect
+	    int[] pos= {0,0};
+	    switch ((int) Math.floor(a / (r * 2))) {
+	        // find the face : 0 top, 1 right, 2 bottom, 3 left
+	        case 0:
+	        	pos[0] = (int) (a - r);
+	        	pos[1] = -r;
+	            break;
+	        case 1:
+	        	pos[0] = r;
+	        	pos[1] = (int) ((a % en) - r);
+	            break;
+	        case 2:
+	        	pos[0] = (int) (r - (a % en));
+	        	pos[1] = r;
+	            break;
+	        case 3:
+	        	pos[0] = -r;
+	        	pos[1] = (int) (r - (a % en));
+	           break;
+	    }
+	    return pos;
 	}
 
 	public static void main(String[] args) {
@@ -51,29 +90,29 @@ public class PrimeSpiral {
 					found = true;
 					break;
 				}
-				gitCoordinate(current);
-				System.out.println("current : " + current);
-				int next1 = spiral(X - 1, Y);
-				int next2 = spiral(X, Y - 1);
-				int next3 = spiral(X + 1, Y);
-				int next4 = spiral(X, Y + 1);
-				System.out.println("Next : " + next1 + " "+ next2 + " "+ next3 + " "+ next4);
-				if (!isVisited[next1] && !isPrime[next1] && next1 <= 10000) {
+				int[] pos = spiralCoordinate(current);
+				//System.out.println("current : " + current);
+				int next1 = spiral(pos[0] - 1, pos[1]);
+				int next2 = spiral(pos[0], pos[1] - 1);
+				int next3 = spiral(pos[0] + 1, pos[1]);
+				int next4 = spiral(pos[0], pos[1] + 1);
+				//System.out.println("Next : " + next1 + " "+ next2 + " "+ next3 + " "+ next4);
+				if (next1 <= 10000 && !isVisited[next1] && !isPrime[next1]) {
 					queue.addLast(next1);
 					step[next1] = step[current] + 1;
 					isVisited[next1] = true;
 				}
-				if (!isVisited[next2] && !isPrime[next2] && next1 <= 10000) {
+				if (next2 <= 10000 && !isVisited[next2] && !isPrime[next2]) {
 					queue.addLast(next2);
 					step[next2] = step[current] + 1;
 					isVisited[next2] = true;
 				}
-				if (!isVisited[next3] && !isPrime[next3] && next1 <= 10000) {
+				if (next3 <= 10000 && !isVisited[next3] && !isPrime[next3]) {
 					queue.addLast(next3);
 					step[next3] = step[current] + 1;
 					isVisited[next3] = true;
 				}
-				if (!isVisited[next4] && !isPrime[next4] && next1 <= 10000) {
+				if (next4 <= 10000 && !isVisited[next4] && !isPrime[next4]) {
 					queue.addLast(next4);
 					step[next4] = step[current] + 1;
 					isVisited[next4] = true;

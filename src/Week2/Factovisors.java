@@ -33,7 +33,6 @@ public class Factovisors {
                 }
                 // If factors found
                 if (count > 0) {
-
                     // Check if n! contains those factors
                     for (int j = factor; j <= n; j *= factor) {
                         count -= n / j;
@@ -54,7 +53,6 @@ public class Factovisors {
 
             }
         }
-
         sc.close();
     }
 }
