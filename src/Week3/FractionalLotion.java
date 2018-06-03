@@ -16,11 +16,9 @@ public class FractionalLotion {
 	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		
-		char buffer[8];
-	    while (scanf("%s",buffer) == 1)
-	    {
-	        int n = atoi(buffer+2);
+	    while (scan.hasNext()){
+	    	String line = scan.nextLine(); 
+	        int n = Integer.parseInt(line.substring(2));
 	        int counter = 0;
 	        int bound = (n << 1) + 1;
 	        for (int x = n+1; x < bound; x++)
@@ -28,13 +26,8 @@ public class FractionalLotion {
 	            int y = x * n; // / (x-n)
 	            if (y % (x - n) == 0) counter++;
 	        }
-	        printf("%d\n",counter);
+	        System.out.println(counter);
 	    }
-	    return 0;
-		
 		scan.close();
 	}
-	
-	
-	
 }

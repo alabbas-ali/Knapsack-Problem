@@ -1,13 +1,12 @@
 package Week3;
 
-import java.io.BufferedInputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class AllCommonDividor {
 	
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(new BufferedInputStream(System.in));
+		Scanner scan = new Scanner(System.in);
         int n = scan.nextInt();
         long[] integers = new long[n];
         //read the #n license plates integers[ 1 - 1000000000 ]
