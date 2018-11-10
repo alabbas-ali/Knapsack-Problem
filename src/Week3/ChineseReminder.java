@@ -98,6 +98,7 @@ public class ChineseReminder {
 	    return a;
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	private static BigInteger mod_inv(BigInteger m, BigInteger n) {
 	    BigInteger bb = n, temp, q;
 	    BigInteger x0 = BigInteger.ZERO;
