@@ -22,7 +22,7 @@ public class Main {
 		readInputData();
 
 		// System.out.println("######### Create Random Population ##########");
-		List<Individual<Integer>> population = new ArrayList<Individual<Integer>>();
+		List<Individual<Integer>> population = new ArrayList<>();
 		for (int i = 0; i < POPSIZE; i++)
 		{
 			Individual<Integer> individual = Operations.createRandomIndividual(INDIVIDUAL_SIZE);
@@ -35,7 +35,7 @@ public class Main {
 		System.out.println("########### Start The Algorthem #########");
 		for (int i = 1; i < NR_OF_ITERATIONS + 1; i++)
 		{
-			List<Individual<Integer>> children = new ArrayList<Individual<Integer>>();
+			List<Individual<Integer>> children = new ArrayList<>();
 			for (int j = 0; j < PARENTS; j++)
 			{
 				Individual<Integer> parent1 = Operations.selectParent(population);
@@ -81,7 +81,7 @@ public class Main {
 			item.setWeight(Double.parseDouble(parts[i]));
 			// System.out.println("Weight = " + Double.parseDouble(parts[i]));
 			item.setSurvivalpoints(Double.parseDouble(parts[i + 1]));
-			// System.out.println("Survivalpoints = " + Double.parseDouble(parts[i+1]));
+			// System.out.println("Survival points = " + Double.parseDouble(parts[i+1]));
 			items.add(item);
 		}
 

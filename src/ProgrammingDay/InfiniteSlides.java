@@ -1,4 +1,4 @@
-package day;
+package ProgrammingDay;
 
 import java.io.BufferedInputStream;
 import java.util.Scanner;

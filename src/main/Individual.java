@@ -3,7 +3,7 @@ package main;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Individual<T extends Integer> extends LinkedList<Integer> implements Comparable<Individual<Integer>> {
+public class Individual<T> extends LinkedList<Integer> implements Comparable<Individual<Integer>> {
 
 	private static final long serialVersionUID = 1L;
 	private int weight = 0;
