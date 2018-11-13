@@ -36,5 +36,3 @@ public class OrderedPair<K, V> implements Pair<K, V> {
 	}
 	
 }
-
-
