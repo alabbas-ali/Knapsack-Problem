@@ -11,6 +11,7 @@ public class HashSetUserDefinedObjectExample {
 		customers.add(new Customer(101, "Rajeev"));
 		customers.add(new Customer(102, "Sachin"));
 		customers.add(new Customer(103, "Chris"));
+		customers.add(new Customer(103, "ME"));
 
 		/*
 		 * HashSet will use the `equals()` & `hashCode()` implementations of the
@@ -60,7 +61,7 @@ class Customer {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(name);
 	}
 
 	@Override
